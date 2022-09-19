@@ -1,4 +1,6 @@
 import PySimpleGUIQt as sg
+import app as app
+
 
 _window = sg.Window('')
 displayHeight = _window.get_screen_dimensions()[1]
@@ -47,7 +49,7 @@ col1 = [
             [sg.Radio('Rewrite files', "RADIO3", default=True), sg.Radio('New files', "RADIO3")],
             [sg.HorizontalSeparator()],
             [sg.HorizontalSeparator()],
-            [sg.Button('OK', size=(displayWidth/3, 80)), sg.Button('CANCEL', size=(displayWidth/3, 80))]
+            [sg.Button('OK', key='Submit', size=(displayWidth/5, 80)), sg.Button('CANCEL', key='Cancel', size=(displayWidth/5, 80)), sg.Button('CLOSE', key='Close', size=(displayWidth/5, 80))]
             ]
 col2 = [
             [sg.HorizontalSeparator()],
@@ -63,6 +65,7 @@ layout = [
     
     ]
 
+
 # Create the Window
 window = sg.Window('Image Fabrica', layout, size=(displayWidth/2, displayHeight), finalize=True)
 
@@ -71,9 +74,12 @@ move_center(window)
 # _window.close()
 while True:
     event, values = window.read()
-    if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+    if event == sg.WIN_CLOSED or event == 'Close': # if user closes window or clicks cancel
         break
-    print('You entered ', values[0])
+    if event == 'Submit':
+        app.submitRequest();
+    if event == 'Cancel':
+        app.cancelRequest();
 
-
+_window.close()
 window.close()
